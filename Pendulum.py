@@ -110,7 +110,7 @@ def pendulum_2D_with_friction(string_length_x = 1, string_length_y = 1, initial_
 
 #Changing the initial angular velocity of the particle changes the trajectory completely, but the trajectory is still similar to the original lissajous curve
 #See Dual Axis Rotation
-#Projection of a 3D object being rotating along its axis???
+#Projection of a 3D object rotating along its axis???
 #pendulum_2D(40,90,0,0,(1,1),60)
 #lissajous_curve(10,2,1,3,1)
 #pendulum_2D(40,90,0.01,0,(1,1),60)
