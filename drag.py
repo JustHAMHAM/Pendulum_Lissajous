@@ -21,7 +21,8 @@ def plane_func(t, x, l, b, m):     #general form for the equation of motion for 
 
 time = (0, 20)
 time_eval = np.linspace(time[0], time[1], 500)
-initial = [1,1]
+initialx = [1,-2]             #first is position, second is velocity
+initialy = [1,0]             #first is position, second is velocity
 lengthx = 1
 lengthy = 1.5
 rad = 0.03
@@ -30,11 +31,11 @@ dense = 1.2
 cd = 0.6   #coefficient of drag
 b = 0.5 * ((rad ** 2) *np.pi + rad*height*np.pi)*dense*cd
 
-solx0 = scp.solve_ivp(plane_func, time, initial, args=(lengthx, 0, 0.1), t_eval=time_eval)           #general Lissajous curves
-soly0 = scp.solve_ivp(plane_func, time, initial, args=(lengthy, 0, 0.1), t_eval=time_eval)
+solx0 = scp.solve_ivp(plane_func, time, initialx, args=(lengthx, 0, 0.1), t_eval=time_eval)           #general Lissajous curves
+soly0 = scp.solve_ivp(plane_func, time, initialy, args=(lengthy, 0, 0.1), t_eval=time_eval)
 
-solx = scp.solve_ivp(plane_func, time, initial, args=(lengthx, b, 0.1), t_eval=time_eval)
-soly = scp.solve_ivp(plane_func, time, initial, args=(lengthy, b, 0.1), t_eval=time_eval)
+solx = scp.solve_ivp(plane_func, time, initialx, args=(lengthx, b, 0.1), t_eval=time_eval)
+soly = scp.solve_ivp(plane_func, time, initialy, args=(lengthy, b, 0.1), t_eval=time_eval)
 
 
 xplot0 = lengthx * solx0.y[0]
@@ -42,8 +43,9 @@ yplot0 = lengthy * soly0.y[0]
 xplot = lengthx * solx.y[0]
 yplot = lengthy * soly.y[0]
 
-plt.plot(xplot0, yplot0)
-plt.plot(xplot, yplot)
+plt.plot(xplot0, yplot0, label = "no drag")
+plt.plot(xplot, yplot, label = "drag coefficient =" + str(b))
 plt.xlabel("x axis (primary string)")
 plt.ylabel("y axis (primary string and supporting strings)")
+plt.legend()
 plt.show()
