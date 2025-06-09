@@ -21,10 +21,10 @@ def plane_func(t, x, l, b, m):     #general form for the equation of motion for 
 
 time = (0, 20)
 time_eval = np.linspace(time[0], time[1], 500)
-initialx = [1,-2]             #first is position, second is velocity
-initialy = [1,0]             #first is position, second is velocity
-lengthx = 1
-lengthy = 1.5
+lengthx = 16
+lengthy = 25
+initialx = [0/lengthx,1.6/lengthx]             #first is position, second is velocity
+initialy = [1/lengthy,0/lengthy]             #first is position, second is velocity
 rad = 0.03
 height = 0.2
 dense = 1.2
