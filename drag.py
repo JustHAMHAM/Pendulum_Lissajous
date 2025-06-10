@@ -19,7 +19,7 @@ def plane_func(t, x, l, b, m):     #general form for the equation of motion for 
     dx2 = -(G/l) * x1 -(b*l/m)*x2*abs(x2)                   #drag expressed for turbulent flow
     return [dx1, dx2]
 
-time = (0, 20)
+time = (0, 60)
 time_eval = np.linspace(time[0], time[1], 500)
 lengthx = 16
 lengthy = 25
