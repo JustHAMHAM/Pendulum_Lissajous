@@ -4,7 +4,7 @@ import scipy.integrate as scp
 
 #variables and constants
 G = 9.81
-k = 2000
+k = 1000
 lengthx = 16
 lengthy = 25
 m = 0.01
@@ -31,17 +31,17 @@ def func(t, inp, lx, ly, k, m):
         dy2 = -(G/ly)*y1
     elif k != 0: 
         dx1 = x2
-        dx2 = (k/(m*(lx**2))) * (np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + ((y1**4)*(ly + (m*G/k)*(1-(y1**2/2)))**2))-np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly * y1 **2)**2))*((x1*(lx + (m*G/k)*(1-(x1**2/2)))**2 + ((m*G*x1**3)/k)*(lx + (m*G/k)*(1-(x1**2/2))))/np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + ((y1**4)*(ly + (m*G/k)*(1-(y1**2/2)))**2)) - ((x1 * lx**2)/(np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly * y1 **2)**2))))
+        dx2 = -(k/(m*(lx**2))) * (np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + (ly + (m*G/k)*(1-(y1**2/2)))**2)-np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly)**2)) * ((x1*(lx + (m*G/k)*(1-(x1**2/2)))**2 + ((m*G*x1**3)/k)*(lx + (m*G/k)*(1-(x1**2/2))))/np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + ((ly + (m*G/k)*(1-(y1**2/2)))**2)) - ((x1 * lx**2)/(np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly)**2))))
         dy1 = y2 
-        dy2 = (1/(m*ly**2 * (1+4*y1**2)))*(-4*m*y1*(y2*ly)**2 + 2*m*G*ly*y1 - k*(np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + ((y1**4)*(ly + (m*G/k)*(1-(y1**2/2)))**2))-np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly * y1 **2)**2)) * (((y1 + 2*y1**3)*(ly + (m*G/k)*(1-(y1**2/2)))**2 + (m*G/k) * (y1 ** 2 + y1 ** 4)*(ly + (m*G/k)*(1-(y1**2/2))))/np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + ((y1**4)*(ly + (m*G/k)*(1-(y1**2/2)))**2)) - (y1*ly**2 + 2*ly**2 * y1 **3)/np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly * y1 **2)**2)))
+        dy2 = -(k/(m*(ly**2))) * (np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + (ly + (m*G/k)*(1-(y1**2/2)))**2)-np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly)**2)) * ((y1*(ly + (m*G/k)*(1-(y1**2/2)))**2 + ((m*G)/k)*(y1 + y1**3)*(ly + (m*G/k)*(1-(y1**2/2))))/np.sqrt(((x1**2)*(lx + (m*G/k)*(1-(x1**2/2)))**2) + ((y1**2)*(ly + (m*G/k)*(1-(y1**2/2)))**2) + ((ly + (m*G/k)*(1-(y1**2/2)))**2)) - ((y1 * ly**2)/(np.sqrt((lx*x1)**2 + (ly*y1)**2 + (ly)**2)))) 
 
     return[dx1, dx2, dy1, dy2]
 
-time = (0, 500)
-time_eval = np.linspace(time[0], time[1], 20000)
+time = (0, 60)
+time_eval = np.linspace(time[0], time[1], 500)
 
 sol0 = scp.solve_ivp(func, time, initial, args=(lengthx, lengthy, -1 , m), t_eval = time_eval)
-sol1 = scp.solve_ivp(func, time, initial, args=(lengthx, lengthy, k, m), t_eval = time_eval)
+sol1 = scp.solve_ivp(func, time, initial, args=(lengthx, lengthy, k, m), t_eval = time_eval, method="LSODA")
 
 xplot0 = lengthx * sol0.y[0]
 yplot0 = lengthy * sol0.y[2]  
